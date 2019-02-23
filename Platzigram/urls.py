@@ -1,11 +1,12 @@
 
-from django.http import HttpResponse
-from django.urls import path
+"""Platzigram URL module"""
 
-def helloworld(request):
-    return HttpResponse("<h1 style='color: red;'>Hello World</h1>")
+from django.urls import path
+from Platzigram import views
 
 
 urlpatterns = [
-    path('helloworld/', helloworld),
+    path('helloworld/', views.helloworld ),
+    path('sortnum/', views.sortnum),
+    path('hi/<str:name>/<int:age>/', views.say_hi),
 ]

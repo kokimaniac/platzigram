@@ -2,11 +2,15 @@
 """Platzigram URL module"""
 
 from django.urls import path
-from Platzigram import views
+
+from Platzigram import views as local_views
+from posts import views as posts_views
 
 
 urlpatterns = [
-    path('helloworld/', views.helloworld ),
-    path('sortnum/', views.sortnum),
-    path('hi/<str:name>/<int:age>/', views.say_hi),
+    path('helloworld/', local_views.helloworld ),
+    path('sortnum/', local_views.sortnum),
+    path('hi/<str:name>/<int:age>/', local_views.say_hi),
+
+    path('posts/', posts_views.list_posts),
 ]

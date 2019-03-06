@@ -50,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'Platzigram.middleware.ProfileCompletionMiddleware'
 ]
 
 ROOT_URLCONF = 'Platzigram.urls'
@@ -125,6 +127,7 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/users/login'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )

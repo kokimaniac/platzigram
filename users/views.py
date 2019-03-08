@@ -1,6 +1,6 @@
 """Users views."""
 #Django
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, views as auth_views
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -21,7 +21,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     queryset = User.objects.all()
     context_object_name = 'user'
 
-    def get_coxtent_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         """Adds users posts to context."""
         context = super().get_context_data(**kwargs)
         user = self.get_object()
@@ -51,38 +51,10 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         username = self.object.user.username
         return reverse('users:detail', kwargs={'username': username})
 
-def login_view(request):
+class LoginView(auth_views.LoginView):
     """Login view."""
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect('posts:feed')
-        else:
-            return render(request, 'users/login.html', {'error': 'Invalid username and password'})
+    template_name = 'users/login.html'
 
-    return render(request, 'users/login.html')
-
-
-def signup(request):
-    """Signup view."""
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form=SignupForm()
-    return render(
-        request=request,
-        template_name='users/signup.html',
-        context={'form': form}
-    )
-
-@login_required
-def logout_view(request):
-    """Logout a user."""
-    logout(request)
-    return redirect('users:login')
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+    """Logout view."""
+    template_name = 'users/logged_out.html'

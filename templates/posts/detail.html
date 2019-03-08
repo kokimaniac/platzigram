@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block head_content %}
+<title>@{{ request.user.username }} | {{ request.post.title }} | Plazigram Post</title>
+{% endblock %}
+
+{% block container %}
+<div class="container">
+    <div class="row">
+        {% include "posts/post_card.html" %}
+    </div>
+</div>
+{% endblock %}

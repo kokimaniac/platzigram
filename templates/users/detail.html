@@ -38,6 +38,11 @@
                         <p>{{ user.profile.biography }}</p>
                     </div>
                 </div>
+                <div class="row mt-4">
+                    {% if user.profile.website %}
+                        <p><a href="{{ user.profile.website }}">{{ user.profile.website }}</a></p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

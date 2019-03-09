@@ -26,6 +26,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         user = self.get_object()
         context['posts'] = Post.objects.filter(user=user).order_by('-created')
         return context
+
 class SignupView(FormView):
     """Users signup view."""
     template_name = 'users/signup.html'
@@ -36,16 +37,18 @@ class SignupView(FormView):
         """Save form data"""
         form.save()
         return super().form_valid(form)
+
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    """Update profile view."""
     template_name = 'users/update_profile.html'
     model = Profile
     fields = ['website', 'biography', 'phone_number', 'picture']
 
     def get_object(self):
         """Return user's profile."""
-        self.request.user.profile
+        return self.request.user.profile
 
-    def success_url(self):
+    def get_success_url(self):
         """Return to users profile."""
         username = self.object.user.username
         return reverse('users:detail', kwargs={'username': username})
